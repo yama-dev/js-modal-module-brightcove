@@ -1,6 +1,6 @@
 !function t(n,i,o){function e(s,l){if(!i[s]){if(!n[s]){var r="function"==typeof require&&require;if(!l&&r)return r(s,!0);if(a)return a(s,!0);var c=new Error("Cannot find module '"+s+"'");throw c.code="MODULE_NOT_FOUND",c}var d=i[s]={exports:{}};n[s][0].call(d.exports,function(t){var i=n[s][1][t];return e(i?i:t)},d,d.exports,t,n,i,o)}return i[s].exports}for(var a="function"==typeof require&&require,s=0;s<o.length;s++)e(o[s]);return e}({1:[function(t,n,i){"use strict";function o(t,n){if(!(t instanceof n))throw new TypeError("Cannot call a class as a function")}var e=function(){function t(t,n){for(var i=0;i<n.length;i++){var o=n[i];o.enumerable=o.enumerable||!1,o.configurable=!0,"value"in o&&(o.writable=!0),Object.defineProperty(t,o.key,o)}}return function(n,i,o){return i&&t(n.prototype,i),o&&t(n,o),n}}();/*!
- * js-brightcove-modal-module.js JavaScript Library v1.0
- * https://github.com/yama-dev/js-brightcove-modal-module
+ * js-modal-module-brightcove.js JavaScript Library v1.0
+ * https://github.com/yama-dev/js-modal-module-brightcove
  * Copyright yama-dev
  * Licensed under the MIT license.
  * Date: 2017-01-30

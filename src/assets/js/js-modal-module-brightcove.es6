@@ -1,6 +1,6 @@
 /*!
- * js-brightcove-modal-module.js JavaScript Library v1.0
- * https://github.com/yama-dev/js-brightcove-modal-module
+ * js-modal-module-brightcove.js JavaScript Library v1.0
+ * https://github.com/yama-dev/js-modal-module-brightcove
  * Copyright yama-dev
  * Licensed under the MIT license.
  * Date: 2017-01-30
