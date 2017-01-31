@@ -1,0 +1,74 @@
+@charset "utf-8";
+
+// Import Modules
+@import "util";
+@import "reset";
+
+// Style
+html {
+  font-size: 62.5%;
+}
+body {
+  position: relative;
+  color: #000;
+  font-size: 1.4rem;
+  line-height: 1.6em;
+  &>iframe {
+    display: none;
+  }
+  min-width: 1200px;
+  width: 100%;
+}
+img {
+  //width: 100%;
+  height: auto !important;
+  display: block;
+}
+br.pc {
+  display: block;
+}
+br.sp {
+  display: none;
+}
+.pc {
+  display: block;
+}
+.sp {
+  display: none;
+}
+
+.hover-alpha {
+  cursor: pointer;
+  transition: opacity .4s cubic-bezier(0.645, 0.045, 0.355, 1) 0s;
+  &:hover {
+    opacity: .6;
+    transition: opacity .4s cubic-bezier(0.645, 0.045, 0.355, 1) 0s;
+  }
+}
+
+@media screen and (max-width: 768px){
+img {
+  width: 100% !important;
+  height: auto !important;
+  display: block;
+}
+.pc {
+  display: none;
+}
+.sp {
+  display: block;
+}
+br.pc {
+  display: none;
+}
+br.sp {
+  display: block;
+}
+body.is_pc {
+}
+body.is_sp {
+}
+body {
+  min-width: 320px;
+}
+}
