@@ -22,7 +22,8 @@ class MODAL_MODULE_BRIGHTCOVE {
       height       : options.height||'630',
       ui_controls  : options.ui_controls == false ? '' : 'controls',
       ui_autoplay  : options.ui_autoplay == false ? '' : 'autoplay',
-      positiontop  : options.positiontop||'200'
+      positiontop  : options.positiontop||'200',
+      duration     : (options.duration / 1000)||0.5
     }
 
     // Set Css position-top
@@ -77,8 +78,8 @@ class MODAL_MODULE_BRIGHTCOVE {
       -webkit-transform: translate(0, 0);
       -ms-transform: translate(0, 0);
       transform: translate(0, 0);
-      -webkit-transition: all 1s linear 0s;
-      transition: all 1s linear 0s;
+      -webkit-transition: all {{ duration }}s linear 0s;
+      transition: all {{ duration }}s linear 0s;
     }
     .modal.modal--bright.active {
       opacity: 1;
@@ -86,8 +87,8 @@ class MODAL_MODULE_BRIGHTCOVE {
       -webkit-transform: translate(0, 0);
       -ms-transform: translate(0, 0);
       transform: translate(0, 0);
-      -webkit-transition: all 1s linear 0s;
-      transition: all 1s linear 0s;
+      -webkit-transition: all {{ duration }}s linear 0s;
+      transition: all {{ duration }}s linear 0s;
     }
     .modal .modal__bg {
       width: 100%;
@@ -210,7 +211,7 @@ class MODAL_MODULE_BRIGHTCOVE {
     this.$modalElem.style.display = 'block';
     setTimeout( () => {
       this.$modalElem.addClass('active');
-    }, 200);
+    }, 20);
   }
   ModalClose(){
     this.$modalElem.removeClass('active');
