@@ -7,9 +7,7 @@
   <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
   <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
-  <script src="//code.jquery.com/jquery-3.1.1.min.js" charset="UTF-8"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js" charset="UTF-8"></script>
   <script src="./assets/js/js-modal-module-brightcove.js"></script>
   <script src="/ga.js"></script>
 </head>
@@ -23,59 +21,52 @@
 
     <div class="col-md-10">
 
-      <h2>js-modal-module-brightcove.js v1.0</h2>
+      <h2>js-modal-module-brightcove.js v1.1</h2>
 
       <hr>
 
       <button class="btn btn-default" onClick="new MODAL_MODULE_BRIGHTCOVE({
-        videoid     : '4217352666001',
-        account     : '20318290001',
-        width       : '1090',
-        height      : '630',
-        duration    : 700,
-        ui_controls : false,
-        ui_autoplay : false
+        videoid: '4217352666001',
+        account: '20318290001',
+      });">Modal OPEN (SIMPLE)</button>
+
+      <pre><code>
+      &lt;button class=&quot;btn btn-default&quot; onClick=&quot;new MODAL_MODULE_BRIGHTCOVE({
+        videoid: &#039;4217352666001&#039;,
+        account: &#039;20318290001&#039;,
+      });&quot;&gt;Modal OPEN (SIMPLE)&lt;/button&gt;
+      </code></pre>
+
+      <hr>
+
+      <button class="btn btn-default" onClick="new MODAL_MODULE_BRIGHTCOVE({
+        videoid      : '4217352666001',
+        account      : '20318290001',
+        width        : '90%',
+        max_width    : '980px',
+        aspect_ratio : '4x3',
+        duration     : 1200,
+        ui_controls  : true,
+        ui_autoplay  : false,
+        ui_close_btn : false
       });">Modal OPEN</button>
 
-      <pre>
-      <code>
-        &lt;button class="btn btn-default" onClick="new MODAL_MODULE_BRIGHTCOVE({<br>
-          videoid     : '4217352666001',<br>
-          account     : '20318290001',<br>
-          width       : '1090',<br>
-          height      : '630',<br>
-          duration    : 700,<br>
-          ui_controls : false,<br>
-          ui_autoplay : false<br>
-        });"&gt;Modal OPEN&lt;/button&gt;
-      </code>
-      </pre>
+      <pre><code>
+      &lt;button class=&quot;btn btn-default&quot; onClick=&quot;new MODAL_MODULE_BRIGHTCOVE({
+        videoid      : &#039;4217352666001&#039;,
+        account      : &#039;20318290001&#039;,
+        width        : &#039;100%&#039;,
+        max_width    : null,
+        aspect_ratio : &#039;4x3&#039;,
+        duration     : 700,
+        ui_controls  : true,
+        ui_autoplay  : true,
+        ui_close_btn : true
+      });&quot;&gt;Modal OPEN&lt;/button&gt;
+      </code></pre>
 
       <hr>
 
-      <button class="btn btn-default" onClick="new MODAL_MODULE_BRIGHTCOVE({
-        videoid     : '4217352666001',
-        account     : '20318290001',
-        width       : '100%',
-        height      : '100%',
-        duration    : 500,
-        ui_controls : true,
-        ui_autoplay : true
-      });">Modal OPEN (Fullscreen)</button>
-
-      <pre>
-      <code>
-        &lt;button class="btn btn-default" onClick="new MODAL_MODULE_BRIGHTCOVE({<br>
-          videoid     : '4217352666001',<br>
-          account     : '20318290001',<br>
-          width       : '100%',<br>
-          height      : '100%',<br>
-          duration    : 500,<br>
-          ui_controls : true,<br>
-          ui_autoplay : true<br>
-        });"&gt;Modal OPEN (Fullscreen)&lt;/button&gt;
-      </code>
-      </pre>
     </div>
 
     <div class="col-md-1">

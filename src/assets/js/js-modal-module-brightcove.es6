@@ -1,9 +1,10 @@
 /*!
- * js-modal-module-brightcove.js JavaScript Library v1.0
+ * js-modal-module-brightcove.js JavaScript Library v1.1
  * https://github.com/yama-dev/js-modal-module-brightcove
  * Copyright yama-dev
  * Licensed under the MIT license.
  * Date: 2017-01-30
+ * UpDate: 2017-12-29 v1.1
  */
 (function(){
 class MODAL_MODULE_BRIGHTCOVE {
@@ -18,34 +19,29 @@ class MODAL_MODULE_BRIGHTCOVE {
       videoid      : options.videoid||'',
       account      : options.account||'',
       player       : options.player||'default_default',
-      width        : options.width||'1090',
-      height       : options.height||'630',
+      width        : options.width||'100%',
+      max_width    : options.max_width||'1280px',
+      aspect_ratio : options.aspect_ratio||'4x3',
       ui_controls  : options.ui_controls == false ? '' : 'controls',
       ui_autoplay  : options.ui_autoplay == false ? '' : 'autoplay',
-      positiontop  : options.positiontop||'200',
+      ui_close_btn : options.ui_close_btn == false ? false : true,
       duration     : (options.duration / 1000)||0.5
     }
 
-    // Set Css position-top
-    if(!/%/.test(this.config.height)){
-      this.config.positiontop = (window.innerHeight - this.config.height) * 0.5;
-      this.config.positiontop = String(this.config.positiontop + 'px');
-    } else if(/%/.test(this.config.height) && this.config.height == '100%'){
-      this.config.positiontop = 0;
-    } else {
-      this.config.positiontop = 0;
-    }
-
     this.modalHtml = `
-      <div class="modal modal--bright">
-        <div class="modal__bg"></div>
-        <div class="modal__inner">
-        {{scriptCode}}
+      <div class="modal__bg"></div>
+      <div class="modal__inner">
+        <div class="modal__inner-video">
+        {{videoCode}}
         </div>
-        <div class="modal__btn-close"></div>
       </div>`;
 
-    this.scriptCode = `
+    // Set Close-Btn
+    if(this.config.ui_close_btn){
+      this.modalHtml += '<div class="modal__btn-close"></div>';
+    }
+
+    this.videoCode = `
       <video id="myPlayer"
         data-video-id="{{ videoid }}"
         data-account="{{ account }}"
@@ -54,14 +50,11 @@ class MODAL_MODULE_BRIGHTCOVE {
         data-application-id
         class="video-js"
         width="{{ width }}"
-        height="{{ height }}"
         {{ui_controls}}
         {{ui_autoplay}}
-        ></video>
-      <script src="//players.brightcove.net/{{ account }}/{{ player }}/index.min.js"></script>`;
+        ></video>`;
 
     this.modalCss = `
-    <style id="myPlayerCss">
     html,body {
       position: relative;
     }
@@ -74,18 +67,14 @@ class MODAL_MODULE_BRIGHTCOVE {
       z-index: 100;
 
       opacity: 0;
-      -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
       -webkit-transform: translate(0, 0);
-      -ms-transform: translate(0, 0);
       transform: translate(0, 0);
       -webkit-transition: all {{ duration }}s linear 0s;
       transition: all {{ duration }}s linear 0s;
     }
     .modal.modal--bright.active {
       opacity: 1;
-      -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
       -webkit-transform: translate(0, 0);
-      -ms-transform: translate(0, 0);
       transform: translate(0, 0);
       -webkit-transition: all {{ duration }}s linear 0s;
       transition: all {{ duration }}s linear 0s;
@@ -99,47 +88,74 @@ class MODAL_MODULE_BRIGHTCOVE {
       background: rgba(0,0,0,.8);
     }
     .modal .modal__inner {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+
+      width: {{ width }};
+      max-width: {{ max_width }};
+
+      -webkit-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+    }
+    .modal .modal__inner .modal__inner-video {
+      position: relative;
       width: 100%;
-      height: 100%;
+      margin: 0 auto;
+      padding-top: 62.5%;
     }
     .modal .modal__inner #myPlayer {
+      position: absolute;
+      top: 0;
+      left: 0;
+
+      width: 100% !important;
+      height: 100% !important;
       margin: 0 auto;
-      top: {{ positiontop }};
     }
     .modal .modal__inner video {
       margin: 0 auto;
     }
     .modal .modal__btn-close {
-      width: 78px;
-      height: 65px;
-      background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAE4AAABBCAYAAAB//JLIAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAABRhJREFUeNrsW39kVVEc//Z2jYgRMSIiImKzlFKaKFEaUxppllKkidIUKU1ZSon6p5RljyxllNI0TSmlp1WMiIgYI1LEY4y+X/uc7tvr9XZ/nHPuue/tw8fm/bjv3M895/s593zumdP2/idFwH7mMPMLVRfqmceYJzMRD7CFOcCcV0WiLWe+Za5l1kUVrp1Zw+yrEtE2M19jlK1jjkcV7hezhbmBearCRTvCfMQ8x9zDnJAXvRgHlPrWhoN+ZD6sMMFqmdeZO3Ge9wvfzMQ8+CDzBIbssgoSbT7zKUZUc7FoOoQTXISAD6RoVoBoS2ACc5mrmLlSH8po+jEZ+7+Z/TCNNJvAW5Qe6Wnj//ugLuHyMIsmZk9KRTuEen2DuQPn9F94Gn/4G35QasMI825KBJMRcoW5F9OsO0G+5GluxAvmUWYv8zO6vMuQCfw9ZgOGZi7oFz0DjbmGhohZrGB+d9gEpI2TMIFvYb6cMdSog8wxXM1aB0VbDxMQsdaEFc2kcDK7bsVVveSYaB2ow2ICWzEbCA3PYAPHId5L1LpbDojWg1uoA8zbcQ7kGW5oDo2UW5dPzDcJmoDMMVczN8HEyGXhCFdWzGIAZjFmWbRFmJ/VwgS0rCFmLDX+KHrcgGWzWAkTGMNF07bwaku4SawwLMCwtYHtzOe4QY9sAkkLR5jPtWCZ5rDh3zqLmtbF7MSF0wqP7GIUtzX9+H9Y8/FlRUOWuDaglw2aOpEM2YcMnfMQb7HG49ZjaDbABAZNnkQSwglOY6ryAL0kLlSQktfpnC4KJzVnFxw2buAjJqCCFJmj/bBxAkkJJ1CBz0aayiqj4DiGvPTgv0GKDXiULD6j5w3ALILWJRWkbDdtAi72OIXHzG70nCUBPl8YpKxJQjRXhBNIZjlEMwc+YgIfyA9SRpNqsCvCEeZ3k2XMojBNb6YyQUq1CacCH1nBOFP0ngpSVJqeT7qxHrmFr7inlRqmng5QQco/afqscNMxjNWUPtSwRRQySKm2oVrstFLvVmJSm3OtgS4Kp4IUcdkRDNWaWeHKYy/5QYqE262YglxwTThXalxhmr6PmcXrYxDvOcwiOyucj5nSdAl4DpIf+IzMCucHKUTl0/Rb5D8d0EgOPB2QZI1bTX6QEiRNlynKF7If+DglXAfqVpaCBykTMAzppVerUbge1CsJqrsoXJCiAp/dNLXXoipqXGGQEidN/4j71T6YxatKFm4hatN80pMJyEOLTThmI9l/OsDKUJXbpnc0lQU0kr4g5QSmJroCH6eEM5mmq6cD6sje0wFWhFNBirE0nfzAZxtNPb6V6ho3Fz1gG9kJUsQg2skPfIbSKFw9ao6YgNang2aALHiqwCd1gbT1NL0I3ZjiWNkOqku4wiDFWppeAu3425cG4Y5geHaT5TS9BMS1ZRlKFkONbgeNU+MK0/QWSigYLgG1HfQJGdwOGrXHOZGml8EQpkHGtoNGEa54W+IouYnL6G1GtoOGFU5tS5RV2WZKOE0PgAOYJGvfDhpGOJWmX4R75cl9GNsOGsQcCoMUp9L0gFCBzzPSuB10JuEib0t0DK9wv9yLW7RRk0NVmYA4aGOKRVOQrDYLs1hgSjiVpn9KiQkERSeGbmyzKCVcB01P0/NUOVDbQZdSzO2gxTVOnOcwadiW6DBU4KO2g96OI5zaltiUchMIihF0jpsoR7kowgVN0ysNWZq+HXQ8rHA1uAKdpHmHXQrQhfMPvaz/R4ABAPiXNc/nZiscAAAAAElFTkSuQmCC);
       position: fixed;
       top: 10px;
       right: 10px;
+      z-index: 10;
+
+      width: 60px;
+      height: 60px;
+
       outline: none;
-      z-index: 9999;
+
       cursor: pointer;
+      color: #fff;
 
       opacity: 1;
-      -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
       -webkit-transition: opacity .3s linear 0s;
       transition: opacity .3s linear 0s;
+    }
+    .modal .modal__btn-close::before {
+      content: '×';
+      position: relative;
+      font-size: 100px;
+      line-height: 65px;
     }
     .modal .modal__btn-close:hover {
       opacity: .6;
-      -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=60)";
       -webkit-transition: opacity .3s linear 0s;
       transition: opacity .3s linear 0s;
     }
-    </style>`;
+    `;
 
     // Set ScriptCode
     for (let obj in this.config) {
       let _reg = new RegExp('({{.?' + obj + '.?}})','g');
       let _regIn = new RegExp('{{.?(' + obj + ').?}}','g');
-      this.scriptCode.match(_regIn);
+      this.videoCode.match(_regIn);
       let _regInStr = RegExp.$1;
-      this.scriptCode = this.scriptCode.replace(_regIn, this.config[_regInStr]);
+      this.videoCode = this.videoCode.replace(_regIn, this.config[_regInStr]);
     }
 
     // Set Offset-Top
@@ -181,11 +197,24 @@ class MODAL_MODULE_BRIGHTCOVE {
       this.hasClass(className) ? this.removeClass(className) : this.addClass(className);
     }
 
-
     // Player
-    this.modalHtml = this.modalHtml.replace(/{{scriptCode}}/g,this.scriptCode);
-    $('head').append(this.modalCss);
-    $('body').append(this.modalHtml);
+    // -> create modal element
+    this.modalHtml = this.modalHtml.replace(/{{videoCode}}/g,this.videoCode);
+    this.modalHtmlHtml = document.createElement('div');
+    this.modalHtmlHtml.className = "modal modal--bright";
+    this.modalHtmlHtml.innerHTML = this.modalHtml;
+    // -> create script element
+    this.modalScriptHtml = document.createElement('script');
+    this.modalScriptHtml.id = "myPlayerScript";
+    this.modalScriptHtml.src = "//players.brightcove.net/" + this.config.account + "/default_default/index.min.js";
+    // -> create style element
+    this.modalCssHtml = document.createElement('style');
+    this.modalCssHtml.id = "myPlayerCss";
+    this.modalCssHtml.innerHTML = this.modalCss;
+    // -> append elements.
+    document.querySelector('head').appendChild(this.modalCssHtml);
+    document.querySelector('head').appendChild(this.modalScriptHtml);
+    document.querySelector('body').appendChild(this.modalHtmlHtml);
 
     // CacheElement
     this.CacheElement();
@@ -193,19 +222,27 @@ class MODAL_MODULE_BRIGHTCOVE {
     // ModalOpen
     this.SetPlayer();
     this.ModalOpen();
-    this.$modalCloseElem.addEventListener('click', (event) => {
-      this.ModalClose();
-    });
+    if(this.$modalCloseElem){
+      this.$modalCloseElem.addEventListener('click', (event) => {
+        this.ModalClose();
+      });
+    }
+    if(this.$modalBgElem){
+      this.$modalBgElem.addEventListener('click', (event) => {
+        this.ModalClose();
+      });
+    }
   }
   DebugMode(){
     console.log(this);
   }
   CacheElement(){
-    this.$targetElem     = '';
-    this.$modalElem      = document.querySelector('.modal.modal--bright');
-    this.$modalCloseElem = document.querySelector('.modal .modal__btn-close');
-    this.$modalBgElem    = document.querySelector('.modal .modal__bg');
-    this.$modalCssElem   = document.querySelector('#myPlayerCss');
+    this.$targetElem      = '';
+    this.$modalElem       = document.querySelector('.modal.modal--bright');
+    this.$modalCloseElem  = document.querySelector('.modal .modal__btn-close');
+    this.$modalBgElem     = document.querySelector('.modal .modal__bg');
+    this.$modalCssElem    = document.querySelector('#myPlayerCss');
+    this.$modalScriptElem = document.querySelector('#myPlayerScript');
   }
   ModalOpen(){
     this.$modalElem.style.display = 'block';
@@ -241,6 +278,7 @@ class MODAL_MODULE_BRIGHTCOVE {
   Destroy(){
     this.$modalElem.remove();
     this.$modalCssElem.remove();
+    this.$modalScriptElem.remove();
   }
 }
 window.MODAL_MODULE_BRIGHTCOVE = MODAL_MODULE_BRIGHTCOVE || {};
