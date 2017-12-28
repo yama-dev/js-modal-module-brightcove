@@ -206,7 +206,7 @@ class MODAL_MODULE_BRIGHTCOVE {
     // -> create script element
     this.modalScriptHtml = document.createElement('script');
     this.modalScriptHtml.id = "myPlayerScript";
-    this.modalScriptHtml.src = "//players.brightcove.net/20318290001/default_default/index.min.js";
+    this.modalScriptHtml.src = "//players.brightcove.net/" + this.config.account + "/default_default/index.min.js";
     // -> create style element
     this.modalCssHtml = document.createElement('style');
     this.modalCssHtml.id = "myPlayerCss";
