@@ -1,10 +1,11 @@
 /*!
- * js-modal-module-brightcove.js JavaScript Library v1.1
+ * js-modal-module-brightcove.js JavaScript Library v1.2
  * https://github.com/yama-dev/js-modal-module-brightcove
  * Copyright yama-dev
  * Licensed under the MIT license.
  * Date: 2017-01-30
  * UpDate: 2017-12-29 v1.1
+ * UpDate: 2018-11-15 v1.2
  */
 (function(){
 class MODAL_MODULE_BRIGHTCOVE {
@@ -272,13 +273,12 @@ class MODAL_MODULE_BRIGHTCOVE {
     let _that = this;
     videojs("myPlayer").on('loadedmetadata', function() {
       var myPlayer = this;
-      // myPlayer.play();
     });
   }
   Destroy(){
-    this.$modalElem.remove();
-    this.$modalCssElem.remove();
-    this.$modalScriptElem.remove();
+    this.$modalElem.parentNode.removeChild(this.$modalElem);
+    this.$modalCssElem.parentNode.removeChild(this.$modalCssElem);
+    this.$modalScriptElem.parentNode.removeChild(this.$modalScriptElem);
   }
 }
 window.MODAL_MODULE_BRIGHTCOVE = MODAL_MODULE_BRIGHTCOVE || {};
