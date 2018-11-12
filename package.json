@@ -1,8 +1,8 @@
 {
-  "name": "web-template-es6modules",
-  "version": "1.0.0",
-  "description": "Web site production for the template",
-  "keywords": "web gulp babel browserify modules",
+  "name": "js-modal-module-brightcove",
+  "version": "1.2.0",
+  "description": "",
+  "keywords": "",
   "author": "yama-dev",
   "license": "MIT",
   "main": "index.js",
@@ -20,12 +20,6 @@
     "url": "https://github.com/yama-dev/web-template-es6modules"
   },
   "dependencies": {
-    "bootstrap": "^3.3.7",
-    "gulp": "^3.9.1",
-    "jquery": "^3.1.0",
-    "lodash": "^4.17.4",
-    "sweetalert": "^1.1.3",
-    "velocity-animate": "^1.4.0"
   },
   "devDependencies": {
     "babel-core": "^6.7.0",
@@ -49,7 +43,7 @@
     "gulp-notify": "^2.2.0",
     "gulp-pleeease": "^2.0.2",
     "gulp-plumber": "^1.0.1",
-    "gulp-sass": "^2.2.0",
+    "gulp-sass": "^4.0.2",
     "gulp-uglify": "^1.5.4",
     "minimist": "^1.2.0",
     "run-sequence": "^1.1.5",
